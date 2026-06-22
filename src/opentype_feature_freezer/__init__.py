@@ -2,14 +2,13 @@ from __future__ import annotations
 
 import logging
 import os
-from collections.abc import Mapping, MutableMapping
-from types import SimpleNamespace
-from typing import TYPE_CHECKING, List, Optional, Set
+from typing import TYPE_CHECKING
 
 import fontTools.ttLib as ttLib
 
 if TYPE_CHECKING:
     from argparse import Namespace
+    from collections.abc import Mapping, MutableMapping
 
 __version__ = "1.32.2"
 
@@ -29,7 +28,7 @@ class RemapByOTL:
         self.filterByScript: str | None = None
         self.LookupList: list[int] | None = None
         self.names: list[str] = []
-        self.options: SimpleNamespace = options
+        self.options: Namespace = options
         self.reportFeature: list[str] = []
         self.reportLangSys: list[str] = []
         self.subs0: list[str] = []
@@ -149,7 +148,11 @@ class RemapByOTL:
 
         assert self.FeatureIndex is not None
         for fi in self.FeatureIndex:
-            if gsub.FeatureList.FeatureRecord[fi].FeatureTag in self.filterByFeatures:
+            feature_tag = gsub.FeatureList.FeatureRecord[fi].FeatureTag
+            if (
+                self.filterByFeatures is not None
+                and feature_tag in self.filterByFeatures
+            ):
                 lookup_list_set.update(
                     gsub.FeatureList.FeatureRecord[fi].Feature.LookupListIndex
                 )
