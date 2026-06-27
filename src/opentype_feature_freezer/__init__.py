@@ -95,6 +95,7 @@ class RemapByOTL:
 
     def initSubs(self) -> None:
         self.success = True
+        assert self.ttx is not None
         self.subs0 = list(self.ttx.getGlyphOrder())
         self.subs1 = list(self.ttx.getGlyphOrder())
 

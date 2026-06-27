@@ -7,7 +7,7 @@ name = "opentype-feature-freezer"
 version = "1.32.2" # Will be replaced by hatch-vcs later
 description = "Turns OpenType features 'on' by default in a font: reassigns the font's Unicode-to-glyph mapping fo permanently 'freeze' the 1-to-1 substitution features, and creates a new font."
 readme = "README.md"
-requires-python = ">=3.8" # Modernizing to Python 3.8+
+requires-python = ">=3.10"
 license = "Apache-2.0"
 authors = [
     { name = "Adam Twardoch", email = "adam@twardoch.com" },
@@ -20,8 +20,6 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
