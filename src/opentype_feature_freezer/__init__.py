@@ -99,6 +99,29 @@ class RemapByOTL:
         self.subs0 = list(self.ttx.getGlyphOrder())
         self.subs1 = list(self.ttx.getGlyphOrder())
 
+    def deleteLookups(self) -> None:
+        self.success = True
+        assert self.ttx is not None
+        if self.options.deletes is None:
+            self.success = True
+            return
+
+        deletion_filter = self.options.deletes.split(",")
+        logger.info("[filterLookupList] Features to apply: %s", self.filterByFeatures)
+        if "GSUB" not in self.ttx:
+            self.success = True
+            return
+
+        gsub = self.ttx["GSUB"].table
+        feature_list = gsub.FeatureList
+        feature_list.FeatureRecord = [
+            fr
+            for fr in feature_list.FeatureRecord
+            if fr.FeatureTag not in deletion_filter
+        ]
+
+        feature_list.FeatureCount = len(feature_list.FeatureRecord)
+
     def filterFeatureIndex(self) -> None:
         self.success = True
         assert self.ttx is not None
@@ -363,6 +386,10 @@ class RemapByOTL:
             return
 
         self.remapCmaps()
+        if not self.success:
+            return
+
+        self.deleteLookups()
         if not self.success:
             return
 

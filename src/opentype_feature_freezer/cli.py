@@ -42,6 +42,15 @@ def parseOptions(args: Sequence[str] | None = None) -> Namespace:
         help="comma-separated list of OpenType feature tags, e.g. 'smcp,c2sc,onum'",
     )
     group_freezing.add_argument(
+        "-d",
+        "--deletes",
+        action="store",
+        dest="deletes",
+        type=str,
+        default=None,
+        help="List of tags to delete, e.g. 'calt,liga'",
+    )
+    group_freezing.add_argument(
         "-s",
         "--script",
         action="store",
